@@ -1,4 +1,4 @@
-# iLINKZIP
+﻿# iLINKZIP
 
 中文优先的动态二维码、短链接、活网址平台（支持中英双语，默认中文）。
 
@@ -72,6 +72,45 @@ npm run dev
   - `s3:GetObject`
   - `s3:PutObject`
   - 资源范围限定到你的 iLINKZIP bucket
+
+最小 IAM Policy 示例（将 `YOUR_BUCKET_NAME` 替换为你的 bucket 名称）：
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowListBucket",
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListBucket"
+      ],
+      "Resource": "arn:aws:s3:::YOUR_BUCKET_NAME"
+    },
+    {
+      "Sid": "AllowObjectReadWrite",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject"
+      ],
+      "Resource": "arn:aws:s3:::YOUR_BUCKET_NAME/*"
+    }
+  ]
+}
+```
+
+如果你想进一步限制路径，可把 Object 资源改为：
+
+```text
+arn:aws:s3:::YOUR_BUCKET_NAME/users/*
+arn:aws:s3:::YOUR_BUCKET_NAME/auth/*
+arn:aws:s3:::YOUR_BUCKET_NAME/links/*
+arn:aws:s3:::YOUR_BUCKET_NAME/slug/*
+arn:aws:s3:::YOUR_BUCKET_NAME/owner/*
+arn:aws:s3:::YOUR_BUCKET_NAME/stats/*
+arn:aws:s3:::YOUR_BUCKET_NAME/ratelimit/*
+```
 
 2. Resend 邮件服务
 - 创建 Resend API Key
