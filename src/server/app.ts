@@ -26,11 +26,11 @@ export function createApp(services: AppServices): Hono<{ Variables: AppVariables
   app.route('/api/v1/links', linksRoutes(services));
   app.route('/api/v1', redirectRoutes(services));
 
-  app.notFound((c) => c.json({ error: '未找到资源 / Not found' }, 404));
+  app.notFound((c) => c.json({ error: '鏈壘鍒拌祫婧?/ Not found' }, 404));
 
   app.onError((error, c) => {
     console.error('[iLINKZIP] unhandled error:', error);
-    return c.json({ error: '服务器内部错误 / Internal server error' }, 500);
+    return c.json({ error: '鏈嶅姟鍣ㄥ唴閮ㄩ敊璇?/ Internal server error' }, 500);
   });
 
   return app;

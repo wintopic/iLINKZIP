@@ -1,27 +1,27 @@
 # iLINKZIP
 
-ÖĞÎÄÓÅÏÈµÄ¶¯Ì¬¶şÎ¬Âë¡¢¶ÌÁ´½Ó¡¢»îÍøÖ·Æ½Ì¨£¨Ö§³ÖÖĞÓ¢Ë«Óï£¬Ä¬ÈÏÖĞÎÄ£©¡£
+ä¸­æ–‡ä¼˜å…ˆçš„åŠ¨æ€äºŒç»´ç ã€çŸ­é“¾æ¥ã€æ´»ç½‘å€å¹³å°ï¼ˆæ”¯æŒä¸­è‹±åŒè¯­ï¼Œé»˜è®¤ä¸­æ–‡ï¼‰ã€‚
 
 English summary: iLINKZIP is a dynamic QR / short-link / live URL platform with bilingual UI (default Chinese), built on Astro + Hono and S3-only persistence.
 
-## ¹¦ÄÜÌØĞÔ£¨ÖĞÎÄ£©
+## åŠŸèƒ½ç‰¹æ€§ï¼ˆä¸­æ–‡ï¼‰
 
-- Ä§·¨Á´½ÓµÇÂ¼£¨Resend£©
-- ¶ÌÁ´½ÓÓë»îÍøÖ·£¨`/r/:slug`£©
-- ¶¯Ì¬¶şÎ¬Âë£¨`/q/:slug.svg`£©
-- »ù´¡Í³¼Æ£¨×Üµã»÷¡¢7 ÈÕÇ÷ÊÆ¡¢¹ú¼Ò/Éè±¸·Ö²¼£©
-- ·ÀÀÄÓÃ£¨Turnstile + °´ÈÕÏŞÁ÷£©
-- µ¥²Ö¿â¿É²¿Êğµ½ Vercel Óë Cloudflare Pages
+- é­”æ³•é“¾æ¥ç™»å½•ï¼ˆResendï¼‰
+- çŸ­é“¾æ¥ä¸æ´»ç½‘å€ï¼ˆ`/r/:slug`ï¼‰
+- åŠ¨æ€äºŒç»´ç ï¼ˆ`/q/:slug.svg`ï¼‰
+- åŸºç¡€ç»Ÿè®¡ï¼ˆæ€»ç‚¹å‡»ã€7 æ—¥è¶‹åŠ¿ã€å›½å®¶/è®¾å¤‡åˆ†å¸ƒï¼‰
+- é˜²æ»¥ç”¨ï¼ˆTurnstile + æŒ‰æ—¥é™æµï¼‰
+- å•ä»“åº“å¯éƒ¨ç½²åˆ° Vercel ä¸ Cloudflare Pages
 
-## ¼¼ÊõÕ»
+## æŠ€æœ¯æ ˆ
 
-- Ç°¶Ë£ºAstro
-- API£ºHono
-- ´æ´¢£ºAWS S3£¨S3-only£©
-- ÓÊ¼ş£ºResend
-- ÑéÖ¤£ºCloudflare Turnstile
+- å‰ç«¯ï¼šAstro
+- APIï¼šHono
+- å­˜å‚¨ï¼šAWS S3ï¼ˆS3-onlyï¼‰
+- é‚®ä»¶ï¼šResend
+- éªŒè¯ï¼šCloudflare Turnstile
 
-## API£¨v1£©
+## APIï¼ˆv1ï¼‰
 
 - `POST /api/v1/auth/request-magic-link`
 - `GET /api/v1/auth/callback?token=...`
@@ -33,10 +33,10 @@ English summary: iLINKZIP is a dynamic QR / short-link / live URL platform with 
 - `PATCH /api/v1/links/:id`
 - `DELETE /api/v1/links/:id`
 - `GET /api/v1/links/:id/stats?range=7d`
-- `GET /r/:slug`£¨ÖØĞ´µ½ `/api/v1/r/:slug`£©
-- `GET /q/:slug.svg`£¨ÖØĞ´µ½ `/api/v1/q/:slug.svg`£©
+- `GET /r/:slug`ï¼ˆé‡å†™åˆ° `/api/v1/r/:slug`ï¼‰
+- `GET /q/:slug.svg`ï¼ˆé‡å†™åˆ° `/api/v1/q/:slug.svg`ï¼‰
 
-## S3 Êı¾İÄ£ĞÍ
+## S3 æ•°æ®æ¨¡å‹
 
 - `users/by-email/{sha256(email)}.json -> { userId }`
 - `users/{userId}.json`
@@ -47,7 +47,7 @@ English summary: iLINKZIP is a dynamic QR / short-link / live URL platform with 
 - `stats/{linkId}/{yyyy-mm-dd}.json`
 - `ratelimit/{yyyy-mm-dd}/{scope}/{sha256(identifier)}.json`
 
-## ±¾µØ¿ª·¢
+## æœ¬åœ°å¼€å‘
 
 ```bash
 npm install
@@ -55,11 +55,11 @@ cp .env.example .env
 npm run dev
 ```
 
-·ÃÎÊ `http://localhost:4321`¡£
+è®¿é—® `http://localhost:4321`ã€‚
 
-Î´ÅäÖÃ S3 Æ¾¾İÊ±£¬ÏµÍ³»á×Ô¶¯Ê¹ÓÃÄÚ´æ²Ö´¢Ä£Ê½£¨½ö±¾µØµ÷ÊÔ£©¡£
+æœªé…ç½® S3 å‡­æ®æ—¶ï¼Œç³»ç»Ÿä¼šè‡ªåŠ¨ä½¿ç”¨å†…å­˜ä»“å‚¨æ¨¡å¼ï¼ˆä»…æœ¬åœ°è°ƒè¯•ï¼‰ã€‚
 
-## »·¾³±äÁ¿
+## ç¯å¢ƒå˜é‡
 
 - `APP_BASE_URL`
 - `SESSION_SECRET`
@@ -73,31 +73,31 @@ npm run dev
 - `TURNSTILE_SITE_KEY`
 - `TURNSTILE_SECRET_KEY`
 
-## ²¿Êğ
+## éƒ¨ç½²
 
-### Vercel£¨Deploy Button£©
+### Vercelï¼ˆDeploy Buttonï¼‰
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fwintopic%2FiLINKZIP)
 
-ËµÃ÷£º
-- `vercel.json` ÒÑÅäÖÃ `/r/*` Óë `/q/*.svg` ÖØĞ´¡£
-- API Èë¿Ú£º`api/[[route]].ts`¡£
+è¯´æ˜ï¼š
+- `vercel.json` å·²é…ç½® `/r/*` ä¸ `/q/*.svg` é‡å†™ã€‚
+- API å…¥å£ï¼š`api/[[route]].ts`ã€‚
 
-### Cloudflare Pages£¨´¿ Pages Á÷³Ì£©
+### Cloudflare Pagesï¼ˆçº¯ Pages æµç¨‹ï¼‰
 
-1. ´ò¿ª£º`https://dash.cloudflare.com/?to=/:account/pages/new`
-2. µ¼Èë²Ö¿â `wintopic/iLINKZIP`
-3. ¹¹½¨ÅäÖÃ£º
-   - Build command£º`npm run build`
-   - Build output directory£º`dist`
-4. Functions Ä¿Â¼£º`functions/`
-5. ÅäÖÃÓë Vercel ÏàÍ¬µÄ»·¾³±äÁ¿
+1. æ‰“å¼€ï¼š`https://dash.cloudflare.com/?to=/:account/pages/new`
+2. å¯¼å…¥ä»“åº“ `wintopic/iLINKZIP`
+3. æ„å»ºé…ç½®ï¼š
+   - Build commandï¼š`npm run build`
+   - Build output directoryï¼š`dist`
+4. Functions ç›®å½•ï¼š`functions/`
+5. é…ç½®ä¸ Vercel ç›¸åŒçš„ç¯å¢ƒå˜é‡
 
-ËµÃ÷£º
-- `public/_redirects` ÒÑÅäÖÃ `/r/*` Óë `/q/*` ÖØĞ´¡£
-- API Èë¿Ú£º`functions/api/[[route]].ts`¡£
+è¯´æ˜ï¼š
+- `public/_redirects` å·²é…ç½® `/r/*` ä¸ `/q/*` é‡å†™ã€‚
+- API å…¥å£ï¼š`functions/api/[[route]].ts`ã€‚
 
-## ÖÊÁ¿¼ì²é
+## è´¨é‡æ£€æŸ¥
 
 ```bash
 npm run check
@@ -105,12 +105,12 @@ npm test
 npm run build
 ```
 
-## ¿ªÔ´Ğ­×÷
+## å¼€æºåä½œ
 
-- ¹±Ï×Ö¸ÄÏ£º`CONTRIBUTING.md`
-- °²È«²ßÂÔ£º`SECURITY.md`
-- ĞĞÎª×¼Ôò£º`CODE_OF_CONDUCT.md`
-- Ğí¿ÉÖ¤£º`LICENSE`
+- è´¡çŒ®æŒ‡å—ï¼š`CONTRIBUTING.md`
+- å®‰å…¨ç­–ç•¥ï¼š`SECURITY.md`
+- è¡Œä¸ºå‡†åˆ™ï¼š`CODE_OF_CONDUCT.md`
+- è®¸å¯è¯ï¼š`LICENSE`
 
 ## English
 

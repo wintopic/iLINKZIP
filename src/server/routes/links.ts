@@ -47,19 +47,19 @@ export function linksRoutes(services: AppServices): Hono<{ Variables: AppVariabl
       limit: 500,
     });
     if (!rate.allowed) {
-      return c.json({ error: '已达到当日创建上限 / Daily creation limit reached' }, 429);
+      return c.json({ error: '宸茶揪鍒板綋鏃ュ垱寤轰笂闄?/ Daily creation limit reached' }, 429);
     }
 
     if (services.config.turnstileSecretKey) {
       const captchaPassed = await services.captcha.verify(body.turnstileToken ?? '', requestMeta.ip);
       if (!captchaPassed) {
-        return c.json({ error: '验证码校验失败 / Captcha verification failed' }, 400);
+        return c.json({ error: '楠岃瘉鐮佹牎楠屽け璐?/ Captcha verification failed' }, 400);
       }
     }
 
     let slug = body.slug ? sanitizeSlug(body.slug) : generateSlug(7);
     if (!isValidSlug(slug)) {
-      return c.json({ error: '短码格式无效 / Invalid slug format' }, 400);
+      return c.json({ error: '鐭爜鏍煎紡鏃犳晥 / Invalid slug format' }, 400);
     }
 
     const now = new Date().toISOString();
@@ -87,7 +87,7 @@ export function linksRoutes(services: AppServices): Hono<{ Variables: AppVariabl
     }
 
     if (!result.ok) {
-      return c.json({ error: '短码已存在 / Slug already exists' }, 409);
+      return c.json({ error: '鐭爜宸插瓨鍦?/ Slug already exists' }, 409);
     }
 
     return c.json({ link }, 201);
@@ -98,7 +98,7 @@ export function linksRoutes(services: AppServices): Hono<{ Variables: AppVariabl
     const id = c.req.param('id');
     const link = await services.repo.getLinkById(id);
     if (!link || link.ownerId !== userId) {
-      return c.json({ error: '未找到资源 / Not found' }, 404);
+      return c.json({ error: '鏈壘鍒拌祫婧?/ Not found' }, 404);
     }
 
     return c.json({ link });
@@ -111,7 +111,7 @@ export function linksRoutes(services: AppServices): Hono<{ Variables: AppVariabl
     const existing = await services.repo.getLinkById(id);
 
     if (!existing || existing.ownerId !== userId) {
-      return c.json({ error: '未找到资源 / Not found' }, 404);
+      return c.json({ error: '鏈壘鍒拌祫婧?/ Not found' }, 404);
     }
 
     const updated: Link = {
@@ -132,7 +132,7 @@ export function linksRoutes(services: AppServices): Hono<{ Variables: AppVariabl
     const existing = await services.repo.getLinkById(id);
 
     if (!existing || existing.ownerId !== userId) {
-      return c.json({ error: '未找到资源 / Not found' }, 404);
+      return c.json({ error: '鏈壘鍒拌祫婧?/ Not found' }, 404);
     }
 
     const updated: Link = {
@@ -150,12 +150,12 @@ export function linksRoutes(services: AppServices): Hono<{ Variables: AppVariabl
     const id = c.req.param('id');
     const range = c.req.query('range') || '7d';
     if (range !== '7d') {
-      return c.json({ error: 'MVP 仅支持 7d 统计范围 / Only 7d range is supported in MVP' }, 400);
+      return c.json({ error: 'MVP 浠呮敮鎸?7d 缁熻鑼冨洿 / Only 7d range is supported in MVP' }, 400);
     }
 
     const link = await services.repo.getLinkById(id);
     if (!link || link.ownerId !== userId) {
-      return c.json({ error: '未找到资源 / Not found' }, 404);
+      return c.json({ error: '鏈壘鍒拌祫婧?/ Not found' }, 404);
     }
 
     const dates = lastNDates(7);

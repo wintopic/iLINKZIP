@@ -6,55 +6,55 @@ import '../styles/global.css';
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>µÇÂ¼ | iLINKZIP</title>
+    <title>ç™»å½• | iLINKZIP</title>
   </head>
   <body>
     <main class="container" style="max-width:560px;padding:5rem 0;">
       <section class="card" style="padding:1.5rem 1.3rem;">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:0.8rem;">
-          <h1 style="margin:0;" data-i18n="title">Ä§·¨Á´½ÓµÇÂ¼</h1>
+          <h1 style="margin:0;" data-i18n="title">é­”æ³•é“¾æ¥ç™»å½•</h1>
           <div class="lang-switch" aria-label="language switch">
-            <button type="button" class="lang-btn" data-lang="zh">ÖĞÎÄ</button>
+            <button type="button" class="lang-btn" data-lang="zh">ä¸­æ–‡</button>
             <button type="button" class="lang-btn" data-lang="en">EN</button>
           </div>
         </div>
-        <p class="muted" data-i18n="subtitle">ÊäÈëÓÊÏäºó£¬ÏµÍ³»á·¢ËÍ 15 ·ÖÖÓÓĞĞ§µÄ°²È«µÇÂ¼Á´½Ó¡£</p>
+        <p class="muted" data-i18n="subtitle">è¾“å…¥é‚®ç®±åï¼Œç³»ç»Ÿä¼šå‘é€ 15 åˆ†é’Ÿæœ‰æ•ˆçš„å®‰å…¨ç™»å½•é“¾æ¥ã€‚</p>
 
         <form id="login-form" style="display:grid;gap:1rem;margin-top:1rem;">
           <div>
-            <label for="email" data-i18n="label_email">ÓÊÏä</label>
+            <label for="email" data-i18n="label_email">é‚®ç®±</label>
             <input id="email" type="email" autocomplete="email" required placeholder="you@domain.com" data-i18n-placeholder="placeholder_email" />
           </div>
 
           <div>
-            <label data-i18n="label_turnstile">ÑéÖ¤Âë</label>
+            <label data-i18n="label_turnstile">éªŒè¯ç </label>
             <div id="turnstile-widget"></div>
           </div>
 
-          <button class="btn" type="submit" data-i18n="btn_submit">·¢ËÍÄ§·¨Á´½Ó</button>
+          <button class="btn" type="submit" data-i18n="btn_submit">å‘é€é­”æ³•é“¾æ¥</button>
         </form>
 
         <p id="status" class="muted" style="margin-top:0.9rem;"></p>
-        <p style="margin:0.5rem 0 0;"><a href="/" data-i18n="back_home">·µ»ØÊ×Ò³</a></p>
+        <p style="margin:0.5rem 0 0;"><a href="/" data-i18n="back_home">è¿”å›é¦–é¡µ</a></p>
       </section>
     </main>
 
     <script>
       const messages = {
         zh: {
-          page_title: 'µÇÂ¼ | iLINKZIP',
-          title: 'Ä§·¨Á´½ÓµÇÂ¼',
-          subtitle: 'ÊäÈëÓÊÏäºó£¬ÏµÍ³»á·¢ËÍ 15 ·ÖÖÓÓĞĞ§µÄ°²È«µÇÂ¼Á´½Ó¡£',
-          label_email: 'ÓÊÏä',
+          page_title: 'ç™»å½• | iLINKZIP',
+          title: 'é­”æ³•é“¾æ¥ç™»å½•',
+          subtitle: 'è¾“å…¥é‚®ç®±åï¼Œç³»ç»Ÿä¼šå‘é€ 15 åˆ†é’Ÿæœ‰æ•ˆçš„å®‰å…¨ç™»å½•é“¾æ¥ã€‚',
+          label_email: 'é‚®ç®±',
           placeholder_email: 'you@domain.com',
-          label_turnstile: 'ÑéÖ¤Âë',
-          btn_submit: '·¢ËÍÄ§·¨Á´½Ó',
-          back_home: '·µ»ØÊ×Ò³',
-          turnstile_disabled: 'µ±Ç°²¿ÊğÎ´ÆôÓÃ Turnstile ÑéÖ¤¡£',
-          sending: '·¢ËÍÖĞ...',
-          send_failed: '·¢ËÍÊ§°Ü',
-          sent_ok: 'ÓÊ¼şÒÑ·¢ËÍ£¬ÇëÇ°ÍùÓÊÏä²éÊÕ¡£',
-          boot_failed: '³õÊ¼»¯Ê§°Ü',
+          label_turnstile: 'éªŒè¯ç ',
+          btn_submit: 'å‘é€é­”æ³•é“¾æ¥',
+          back_home: 'è¿”å›é¦–é¡µ',
+          turnstile_disabled: 'å½“å‰éƒ¨ç½²æœªå¯ç”¨ Turnstile éªŒè¯ã€‚',
+          sending: 'å‘é€ä¸­...',
+          send_failed: 'å‘é€å¤±è´¥',
+          sent_ok: 'é‚®ä»¶å·²å‘é€ï¼Œè¯·å‰å¾€é‚®ç®±æŸ¥æ”¶ã€‚',
+          boot_failed: 'åˆå§‹åŒ–å¤±è´¥',
         },
         en: {
           page_title: 'Sign In | iLINKZIP',

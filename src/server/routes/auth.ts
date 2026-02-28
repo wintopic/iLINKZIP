@@ -38,12 +38,12 @@ export function authRoutes(services: AppServices): Hono<{ Variables: AppVariable
     });
 
     if (!rate.allowed) {
-      return c.json({ error: '请求过于频繁 / Too many requests' }, 429);
+      return c.json({ error: '璇锋眰杩囦簬棰戠箒 / Too many requests' }, 429);
     }
 
     const captchaPassed = await services.captcha.verify(body.turnstileToken, requestMeta.ip);
     if (!captchaPassed) {
-      return c.json({ error: '验证码校验失败 / Captcha verification failed' }, 400);
+      return c.json({ error: '楠岃瘉鐮佹牎楠屽け璐?/ Captcha verification failed' }, 400);
     }
 
     const user = (await services.repo.findUserByEmail(email)) ?? (await services.repo.createUser(email));

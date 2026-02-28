@@ -6,32 +6,32 @@ import '../styles/global.css';
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>iLINKZIP - ¶¯Ì¬¶şÎ¬Âë¡¢¶ÌÁ´½ÓÓë»îÍøÖ·</title>
+    <title>iLINKZIP - åŠ¨æ€äºŒç»´ç ã€çŸ­é“¾æ¥ä¸æ´»ç½‘å€</title>
   </head>
   <body>
     <header class="container" style="display:flex;justify-content:space-between;align-items:center;padding:1.25rem 0;gap:1rem;">
       <strong style="font-size:1.2rem;">iLINKZIP</strong>
       <nav style="display:flex;gap:0.8rem;align-items:center;">
         <div class="lang-switch" aria-label="language switch">
-          <button type="button" class="lang-btn" data-lang="zh">ÖĞÎÄ</button>
+          <button type="button" class="lang-btn" data-lang="zh">ä¸­æ–‡</button>
           <button type="button" class="lang-btn" data-lang="en">EN</button>
         </div>
-        <a class="btn ghost" href="/login" data-i18n="nav_signin">µÇÂ¼</a>
-        <a class="btn" href="/dashboard" data-i18n="nav_dashboard">¿ØÖÆÌ¨</a>
+        <a class="btn ghost" href="/login" data-i18n="nav_signin">ç™»å½•</a>
+        <a class="btn" href="/dashboard" data-i18n="nav_dashboard">æ§åˆ¶å°</a>
       </nav>
     </header>
 
     <main class="container" style="padding:2rem 0 4rem;">
       <section class="card" style="padding:2.5rem;display:grid;grid-template-columns:1.1fr 0.9fr;gap:2rem;">
         <div>
-          <p class="muted" style="text-transform:uppercase;letter-spacing:0.08em;" data-i18n="hero_tag">Ö§³Ö Vercel + Cloudflare Pages ²¿Êğ</p>
-          <h1 style="font-size:2.4rem;line-height:1.1;margin:0.4rem 0 1rem;" data-i18n="hero_title">Ò»¸öÁ´½Ó£¬³ÖĞøÉúĞ§¡£</h1>
+          <p class="muted" style="text-transform:uppercase;letter-spacing:0.08em;" data-i18n="hero_tag">æ”¯æŒ Vercel + Cloudflare Pages éƒ¨ç½²</p>
+          <h1 style="font-size:2.4rem;line-height:1.1;margin:0.4rem 0 1rem;" data-i18n="hero_title">ä¸€ä¸ªé“¾æ¥ï¼ŒæŒç»­ç”Ÿæ•ˆã€‚</h1>
           <p class="muted" style="font-size:1.05rem;line-height:1.6;" data-i18n="hero_desc">
-            ÓÃ S3-only ´æ´¢¹¹½¨¶¯Ì¬¶şÎ¬Âë¡¢¶ÌÁ´½ÓºÍ¿É±à¼­»îÍøÖ·¡£ÎŞĞè¸ü»»¶şÎ¬Âë£¬Ò²ÄÜËæÊ±¸üĞÂÄ¿±êµØÖ·¡£
+            ç”¨ S3-only å­˜å‚¨æ„å»ºåŠ¨æ€äºŒç»´ç ã€çŸ­é“¾æ¥å’Œå¯ç¼–è¾‘æ´»ç½‘å€ã€‚æ— éœ€æ›´æ¢äºŒç»´ç ï¼Œä¹Ÿèƒ½éšæ—¶æ›´æ–°ç›®æ ‡åœ°å€ã€‚
           </p>
           <div style="display:flex;gap:0.8rem;margin-top:1.3rem;">
-            <a class="btn" href="/dashboard" data-i18n="hero_cta_dashboard">½øÈë¿ØÖÆÌ¨</a>
-            <a class="btn ghost" href="/login" data-i18n="hero_cta_login">»ñÈ¡Ä§·¨µÇÂ¼Á´½Ó</a>
+            <a class="btn" href="/dashboard" data-i18n="hero_cta_dashboard">è¿›å…¥æ§åˆ¶å°</a>
+            <a class="btn ghost" href="/login" data-i18n="hero_cta_login">è·å–é­”æ³•ç™»å½•é“¾æ¥</a>
           </div>
         </div>
         <div class="card" style="padding:1rem;background:linear-gradient(155deg,#f5faff,#f5fff9);">
@@ -40,22 +40,22 @@ GET /q/:slug.svg
 GET /r/:slug
 PATCH /api/v1/links/:id
           </pre>
-          <p class="muted" style="text-align:center;margin:0.8rem 0 0;" data-i18n="hero_note">¶şÎ¬ÂëµØÖ·²»±ä£¬Ìø×ªÄ¿±ê¿É±ä¡£</p>
+          <p class="muted" style="text-align:center;margin:0.8rem 0 0;" data-i18n="hero_note">äºŒç»´ç åœ°å€ä¸å˜ï¼Œè·³è½¬ç›®æ ‡å¯å˜ã€‚</p>
         </div>
       </section>
 
       <section style="margin-top:1.4rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
         <article class="card" style="padding:1rem;">
-          <h3 data-i18n="feature_qr_title">»îÂë</h3>
-          <p class="muted" data-i18n-html="feature_qr_desc">Ê¹ÓÃ <code>/q/:slug.svg</code> ×÷Îª¿É´òÓ¡¶şÎ¬ÂëÀ´Ô´£¬ºóĞø¿É¸ÄÄ¿±êµØÖ·¡£</p>
+          <h3 data-i18n="feature_qr_title">æ´»ç </h3>
+          <p class="muted" data-i18n-html="feature_qr_desc">ä½¿ç”¨ <code>/q/:slug.svg</code> ä½œä¸ºå¯æ‰“å°äºŒç»´ç æ¥æºï¼Œåç»­å¯æ”¹ç›®æ ‡åœ°å€ã€‚</p>
         </article>
         <article class="card" style="padding:1rem;">
-          <h3 data-i18n="feature_short_title">¶ÌÁ´½Ó</h3>
-          <p class="muted" data-i18n-html="feature_short_desc">ËùÓĞÁ´½ÓÍ¨¹ı <code>/r/:slug</code> Í³Ò»Ìø×ª£¬±ãÓÚ³ÖĞøÔËÓª¡£</p>
+          <h3 data-i18n="feature_short_title">çŸ­é“¾æ¥</h3>
+          <p class="muted" data-i18n-html="feature_short_desc">æ‰€æœ‰é“¾æ¥é€šè¿‡ <code>/r/:slug</code> ç»Ÿä¸€è·³è½¬ï¼Œä¾¿äºæŒç»­è¿è¥ã€‚</p>
         </article>
         <article class="card" style="padding:1rem;">
-          <h3 data-i18n="feature_analytics_title">»ù´¡Í³¼Æ</h3>
-          <p class="muted" data-i18n="feature_analytics_desc">²é¿´×Üµã»÷¡¢7 ÈÕÇ÷ÊÆ¡¢¹ú¼ÒºÍÉè±¸·Ö²¼¡£</p>
+          <h3 data-i18n="feature_analytics_title">åŸºç¡€ç»Ÿè®¡</h3>
+          <p class="muted" data-i18n="feature_analytics_desc">æŸ¥çœ‹æ€»ç‚¹å‡»ã€7 æ—¥è¶‹åŠ¿ã€å›½å®¶å’Œè®¾å¤‡åˆ†å¸ƒã€‚</p>
         </article>
       </section>
     </main>
@@ -63,21 +63,21 @@ PATCH /api/v1/links/:id
     <script>
       const messages = {
         zh: {
-          title: 'iLINKZIP - ¶¯Ì¬¶şÎ¬Âë¡¢¶ÌÁ´½ÓÓë»îÍøÖ·',
-          nav_signin: 'µÇÂ¼',
-          nav_dashboard: '¿ØÖÆÌ¨',
-          hero_tag: 'Ö§³Ö Vercel + Cloudflare Pages ²¿Êğ',
-          hero_title: 'Ò»¸öÁ´½Ó£¬³ÖĞøÉúĞ§¡£',
-          hero_desc: 'ÓÃ S3-only ´æ´¢¹¹½¨¶¯Ì¬¶şÎ¬Âë¡¢¶ÌÁ´½ÓºÍ¿É±à¼­»îÍøÖ·¡£ÎŞĞè¸ü»»¶şÎ¬Âë£¬Ò²ÄÜËæÊ±¸üĞÂÄ¿±êµØÖ·¡£',
-          hero_cta_dashboard: '½øÈë¿ØÖÆÌ¨',
-          hero_cta_login: '»ñÈ¡Ä§·¨µÇÂ¼Á´½Ó',
-          hero_note: '¶şÎ¬ÂëµØÖ·²»±ä£¬Ìø×ªÄ¿±ê¿É±ä¡£',
-          feature_qr_title: '»îÂë',
-          feature_qr_desc: 'Ê¹ÓÃ <code>/q/:slug.svg</code> ×÷Îª¿É´òÓ¡¶şÎ¬ÂëÀ´Ô´£¬ºóĞø¿É¸ÄÄ¿±êµØÖ·¡£',
-          feature_short_title: '¶ÌÁ´½Ó',
-          feature_short_desc: 'ËùÓĞÁ´½ÓÍ¨¹ı <code>/r/:slug</code> Í³Ò»Ìø×ª£¬±ãÓÚ³ÖĞøÔËÓª¡£',
-          feature_analytics_title: '»ù´¡Í³¼Æ',
-          feature_analytics_desc: '²é¿´×Üµã»÷¡¢7 ÈÕÇ÷ÊÆ¡¢¹ú¼ÒºÍÉè±¸·Ö²¼¡£',
+          title: 'iLINKZIP - åŠ¨æ€äºŒç»´ç ã€çŸ­é“¾æ¥ä¸æ´»ç½‘å€',
+          nav_signin: 'ç™»å½•',
+          nav_dashboard: 'æ§åˆ¶å°',
+          hero_tag: 'æ”¯æŒ Vercel + Cloudflare Pages éƒ¨ç½²',
+          hero_title: 'ä¸€ä¸ªé“¾æ¥ï¼ŒæŒç»­ç”Ÿæ•ˆã€‚',
+          hero_desc: 'ç”¨ S3-only å­˜å‚¨æ„å»ºåŠ¨æ€äºŒç»´ç ã€çŸ­é“¾æ¥å’Œå¯ç¼–è¾‘æ´»ç½‘å€ã€‚æ— éœ€æ›´æ¢äºŒç»´ç ï¼Œä¹Ÿèƒ½éšæ—¶æ›´æ–°ç›®æ ‡åœ°å€ã€‚',
+          hero_cta_dashboard: 'è¿›å…¥æ§åˆ¶å°',
+          hero_cta_login: 'è·å–é­”æ³•ç™»å½•é“¾æ¥',
+          hero_note: 'äºŒç»´ç åœ°å€ä¸å˜ï¼Œè·³è½¬ç›®æ ‡å¯å˜ã€‚',
+          feature_qr_title: 'æ´»ç ',
+          feature_qr_desc: 'ä½¿ç”¨ <code>/q/:slug.svg</code> ä½œä¸ºå¯æ‰“å°äºŒç»´ç æ¥æºï¼Œåç»­å¯æ”¹ç›®æ ‡åœ°å€ã€‚',
+          feature_short_title: 'çŸ­é“¾æ¥',
+          feature_short_desc: 'æ‰€æœ‰é“¾æ¥é€šè¿‡ <code>/r/:slug</code> ç»Ÿä¸€è·³è½¬ï¼Œä¾¿äºæŒç»­è¿è¥ã€‚',
+          feature_analytics_title: 'åŸºç¡€ç»Ÿè®¡',
+          feature_analytics_desc: 'æŸ¥çœ‹æ€»ç‚¹å‡»ã€7 æ—¥è¶‹åŠ¿ã€å›½å®¶å’Œè®¾å¤‡åˆ†å¸ƒã€‚',
         },
         en: {
           title: 'iLINKZIP - Dynamic QR, Short Links, Live URLs',

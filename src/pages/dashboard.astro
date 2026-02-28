@@ -6,70 +6,70 @@ import '../styles/global.css';
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>¿ØÖÆÌ¨ | iLINKZIP</title>
+    <title>æ§åˆ¶å° | iLINKZIP</title>
   </head>
   <body>
     <main class="container" style="padding:2rem 0 4rem;">
       <header style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;">
         <div>
-          <h1 style="margin:0;" data-i18n="dashboard_title">¿ØÖÆÌ¨</h1>
-          <p class="muted" style="margin:0.3rem 0 0;" data-i18n="dashboard_subtitle">¹ÜÀíÄãµÄ¶ÌÁ´½Ó¡¢¶şÎ¬ÂëÈë¿ÚºÍ»ù´¡Í³¼Æ¡£</p>
+          <h1 style="margin:0;" data-i18n="dashboard_title">æ§åˆ¶å°</h1>
+          <p class="muted" style="margin:0.3rem 0 0;" data-i18n="dashboard_subtitle">ç®¡ç†ä½ çš„çŸ­é“¾æ¥ã€äºŒç»´ç å…¥å£å’ŒåŸºç¡€ç»Ÿè®¡ã€‚</p>
         </div>
         <div style="display:flex;gap:0.6rem;align-items:center;">
           <div class="lang-switch" aria-label="language switch">
-            <button type="button" class="lang-btn" data-lang="zh">ÖĞÎÄ</button>
+            <button type="button" class="lang-btn" data-lang="zh">ä¸­æ–‡</button>
             <button type="button" class="lang-btn" data-lang="en">EN</button>
           </div>
-          <a class="btn ghost" href="/" data-i18n="home">Ê×Ò³</a>
-          <button class="btn ghost" id="logout-btn" type="button" data-i18n="logout">ÍË³öµÇÂ¼</button>
+          <a class="btn ghost" href="/" data-i18n="home">é¦–é¡µ</a>
+          <button class="btn ghost" id="logout-btn" type="button" data-i18n="logout">é€€å‡ºç™»å½•</button>
         </div>
       </header>
 
       <section class="card" style="padding:1rem;margin-top:1.2rem;">
-        <h2 style="margin-top:0;" data-i18n="create_title">´´½¨Á´½Ó</h2>
+        <h2 style="margin-top:0;" data-i18n="create_title">åˆ›å»ºé“¾æ¥</h2>
         <form id="create-form" style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;">
           <div>
-            <label for="kind" data-i18n="label_kind">ÀàĞÍ</label>
+            <label for="kind" data-i18n="label_kind">ç±»å‹</label>
             <select id="kind">
-              <option value="short" data-i18n="kind_short">¶ÌÁ´½Ó</option>
-              <option value="qrcode" data-i18n="kind_qrcode">»îÂë</option>
-              <option value="live_url" data-i18n="kind_live">»îÍøÖ·</option>
+              <option value="short" data-i18n="kind_short">çŸ­é“¾æ¥</option>
+              <option value="qrcode" data-i18n="kind_qrcode">æ´»ç </option>
+              <option value="live_url" data-i18n="kind_live">æ´»ç½‘å€</option>
             </select>
           </div>
           <div>
-            <label for="slug" data-i18n="label_slug">¶ÌÂë£¨¿ÉÑ¡£©</label>
+            <label for="slug" data-i18n="label_slug">çŸ­ç ï¼ˆå¯é€‰ï¼‰</label>
             <input id="slug" placeholder="my-campaign" data-i18n-placeholder="placeholder_slug" />
           </div>
           <div style="grid-column:1 / -1;">
-            <label for="targetUrl" data-i18n="label_target">Ä¿±ê URL</label>
+            <label for="targetUrl" data-i18n="label_target">ç›®æ ‡ URL</label>
             <input id="targetUrl" type="url" placeholder="https://example.com/landing" data-i18n-placeholder="placeholder_target" required />
           </div>
           <div style="grid-column:1 / -1;">
-            <label for="title" data-i18n="label_title">±êÌâ£¨¿ÉÑ¡£©</label>
+            <label for="title" data-i18n="label_title">æ ‡é¢˜ï¼ˆå¯é€‰ï¼‰</label>
             <input id="title" maxlength="120" placeholder="Spring Promo" data-i18n-placeholder="placeholder_title" />
           </div>
           <div style="grid-column:1 / -1;">
-            <label data-i18n="label_turnstile">ÑéÖ¤Âë</label>
+            <label data-i18n="label_turnstile">éªŒè¯ç </label>
             <div id="dashboard-turnstile"></div>
           </div>
           <div style="grid-column:1 / -1;display:flex;justify-content:space-between;align-items:center;gap:0.8rem;">
             <p id="create-status" class="muted" style="margin:0;"></p>
-            <button class="btn" type="submit" data-i18n="create_btn">´´½¨</button>
+            <button class="btn" type="submit" data-i18n="create_btn">åˆ›å»º</button>
           </div>
         </form>
       </section>
 
       <section class="card" style="padding:1rem;margin-top:1rem;overflow:auto;">
-        <h2 style="margin-top:0;" data-i18n="my_links">ÎÒµÄÁ´½Ó</h2>
+        <h2 style="margin-top:0;" data-i18n="my_links">æˆ‘çš„é“¾æ¥</h2>
         <table class="table" id="links-table">
           <thead>
             <tr>
-              <th data-i18n="table_title">±êÌâ</th>
-              <th data-i18n="table_slug">¶ÌÂë</th>
-              <th class="hide-mobile" data-i18n="table_type">ÀàĞÍ</th>
-              <th data-i18n="table_status">×´Ì¬</th>
-              <th class="hide-mobile" data-i18n="table_target">Ä¿±êµØÖ·</th>
-              <th data-i18n="table_actions">²Ù×÷</th>
+              <th data-i18n="table_title">æ ‡é¢˜</th>
+              <th data-i18n="table_slug">çŸ­ç </th>
+              <th class="hide-mobile" data-i18n="table_type">ç±»å‹</th>
+              <th data-i18n="table_status">çŠ¶æ€</th>
+              <th class="hide-mobile" data-i18n="table_target">ç›®æ ‡åœ°å€</th>
+              <th data-i18n="table_actions">æ“ä½œ</th>
             </tr>
           </thead>
           <tbody id="links-body"></tbody>
@@ -77,60 +77,60 @@ import '../styles/global.css';
       </section>
 
       <section class="card" style="padding:1rem;margin-top:1rem;">
-        <h2 style="margin-top:0;" data-i18n="stats_title">7 ÈÕÍ³¼Æ</h2>
-        <pre id="stats-box" class="muted" style="white-space:pre-wrap;background:#f7f9ff;padding:0.8rem;border-radius:10px;border:1px solid var(--border);" data-i18n="stats_hint">ÇëÑ¡ÔñÁ´½Ó²é¿´Í³¼Æ¡£</pre>
+        <h2 style="margin-top:0;" data-i18n="stats_title">7 æ—¥ç»Ÿè®¡</h2>
+        <pre id="stats-box" class="muted" style="white-space:pre-wrap;background:#f7f9ff;padding:0.8rem;border-radius:10px;border:1px solid var(--border);" data-i18n="stats_hint">è¯·é€‰æ‹©é“¾æ¥æŸ¥çœ‹ç»Ÿè®¡ã€‚</pre>
       </section>
     </main>
 
     <script>
       const messages = {
         zh: {
-          page_title: '¿ØÖÆÌ¨ | iLINKZIP',
-          dashboard_title: '¿ØÖÆÌ¨',
-          dashboard_subtitle: '¹ÜÀíÄãµÄ¶ÌÁ´½Ó¡¢¶şÎ¬ÂëÈë¿ÚºÍ»ù´¡Í³¼Æ¡£',
-          home: 'Ê×Ò³',
-          logout: 'ÍË³öµÇÂ¼',
-          create_title: '´´½¨Á´½Ó',
-          label_kind: 'ÀàĞÍ',
-          kind_short: '¶ÌÁ´½Ó',
-          kind_qrcode: '»îÂë',
-          kind_live: '»îÍøÖ·',
-          label_slug: '¶ÌÂë£¨¿ÉÑ¡£©',
-          placeholder_slug: '×Ô¶¨Òå¶ÌÂë£¬Èç»î¶¯Ò³',
-          label_target: 'Ä¿±ê URL',
+          page_title: 'æ§åˆ¶å° | iLINKZIP',
+          dashboard_title: 'æ§åˆ¶å°',
+          dashboard_subtitle: 'ç®¡ç†ä½ çš„çŸ­é“¾æ¥ã€äºŒç»´ç å…¥å£å’ŒåŸºç¡€ç»Ÿè®¡ã€‚',
+          home: 'é¦–é¡µ',
+          logout: 'é€€å‡ºç™»å½•',
+          create_title: 'åˆ›å»ºé“¾æ¥',
+          label_kind: 'ç±»å‹',
+          kind_short: 'çŸ­é“¾æ¥',
+          kind_qrcode: 'æ´»ç ',
+          kind_live: 'æ´»ç½‘å€',
+          label_slug: 'çŸ­ç ï¼ˆå¯é€‰ï¼‰',
+          placeholder_slug: 'è‡ªå®šä¹‰çŸ­ç ï¼Œå¦‚æ´»åŠ¨é¡µ',
+          label_target: 'ç›®æ ‡ URL',
           placeholder_target: 'https://example.com/landing',
-          label_title: '±êÌâ£¨¿ÉÑ¡£©',
-          placeholder_title: '´º¼¾»î¶¯Ò³',
-          label_turnstile: 'ÑéÖ¤Âë',
-          create_btn: '´´½¨',
-          my_links: 'ÎÒµÄÁ´½Ó',
-          table_title: '±êÌâ',
-          table_slug: '¶ÌÂë',
-          table_type: 'ÀàĞÍ',
-          table_status: '×´Ì¬',
-          table_target: 'Ä¿±êµØÖ·',
-          table_actions: '²Ù×÷',
-          stats_title: '7 ÈÕÍ³¼Æ',
-          stats_hint: 'ÇëÑ¡ÔñÁ´½Ó²é¿´Í³¼Æ¡£',
-          no_links: 'ÔİÎŞÁ´½Ó¡£',
-          action_stats: 'Í³¼Æ',
-          action_edit: 'ĞŞ¸Ä',
-          action_disable: 'Í£ÓÃ',
-          action_open: '´ò¿ª',
-          action_qr: '¶şÎ¬Âë',
-          status_creating: '´´½¨ÖĞ...',
-          status_create_failed: '´´½¨Ê§°Ü',
-          status_created: '´´½¨³É¹¦¡£',
-          links_load_failed: '¼ÓÔØÁ´½ÓÊ§°Ü',
-          stats_load_failed: '¼ÓÔØÍ³¼ÆÊ§°Ü',
-          update_failed: '¸üĞÂÊ§°Ü',
-          prompt_new_url: 'ÇëÊäÈëĞÂµÄÄ¿±ê URL£º',
-          boot_failed: '³õÊ¼»¯Ê§°Ü',
-          status_active: 'ÉúĞ§ÖĞ',
-          status_disabled: 'ÒÑÍ£ÓÃ',
-          kind_short_label: '¶ÌÁ´½Ó',
-          kind_qrcode_label: '»îÂë',
-          kind_live_label: '»îÍøÖ·',
+          label_title: 'æ ‡é¢˜ï¼ˆå¯é€‰ï¼‰',
+          placeholder_title: 'æ˜¥å­£æ´»åŠ¨é¡µ',
+          label_turnstile: 'éªŒè¯ç ',
+          create_btn: 'åˆ›å»º',
+          my_links: 'æˆ‘çš„é“¾æ¥',
+          table_title: 'æ ‡é¢˜',
+          table_slug: 'çŸ­ç ',
+          table_type: 'ç±»å‹',
+          table_status: 'çŠ¶æ€',
+          table_target: 'ç›®æ ‡åœ°å€',
+          table_actions: 'æ“ä½œ',
+          stats_title: '7 æ—¥ç»Ÿè®¡',
+          stats_hint: 'è¯·é€‰æ‹©é“¾æ¥æŸ¥çœ‹ç»Ÿè®¡ã€‚',
+          no_links: 'æš‚æ— é“¾æ¥ã€‚',
+          action_stats: 'ç»Ÿè®¡',
+          action_edit: 'ä¿®æ”¹',
+          action_disable: 'åœç”¨',
+          action_open: 'æ‰“å¼€',
+          action_qr: 'äºŒç»´ç ',
+          status_creating: 'åˆ›å»ºä¸­...',
+          status_create_failed: 'åˆ›å»ºå¤±è´¥',
+          status_created: 'åˆ›å»ºæˆåŠŸã€‚',
+          links_load_failed: 'åŠ è½½é“¾æ¥å¤±è´¥',
+          stats_load_failed: 'åŠ è½½ç»Ÿè®¡å¤±è´¥',
+          update_failed: 'æ›´æ–°å¤±è´¥',
+          prompt_new_url: 'è¯·è¾“å…¥æ–°çš„ç›®æ ‡ URLï¼š',
+          boot_failed: 'åˆå§‹åŒ–å¤±è´¥',
+          status_active: 'ç”Ÿæ•ˆä¸­',
+          status_disabled: 'å·²åœç”¨',
+          kind_short_label: 'çŸ­é“¾æ¥',
+          kind_qrcode_label: 'æ´»ç ',
+          kind_live_label: 'æ´»ç½‘å€',
         },
         en: {
           page_title: 'Dashboard | iLINKZIP',
