@@ -2,19 +2,99 @@
 import '../styles/global.css';
 ---
 
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>Not Found | iLINKZIP</title>
+    <title>页面未找到 | iLINKZIP</title>
   </head>
   <body>
     <main class="container" style="padding:4rem 0;max-width:640px;">
       <section class="card" style="padding:1.4rem;">
-        <h1>404</h1>
-        <p class="muted">The page you requested does not exist.</p>
-        <p><a href="/">Go to Home</a></p>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:0.8rem;">
+          <h1 style="margin:0;">404</h1>
+          <div class="lang-switch" aria-label="language switch">
+            <button type="button" class="lang-btn" data-lang="zh">中文</button>
+            <button type="button" class="lang-btn" data-lang="en">EN</button>
+          </div>
+        </div>
+        <p class="muted" data-i18n="desc">你访问的页面不存在。</p>
+        <p><a href="/" data-i18n="back_home">返回首页</a></p>
       </section>
     </main>
+
+    <script>
+      const messages = {
+        zh: {
+          title: '页面未找到 | iLINKZIP',
+          desc: '你访问的页面不存在。',
+          back_home: '返回首页',
+        },
+        en: {
+          title: 'Not Found | iLINKZIP',
+          desc: 'The page you requested does not exist.',
+          back_home: 'Go to Home',
+        },
+      };
+
+      const supported = new Set(['zh', 'en']);
+      let lang = resolveLang();
+
+      function resolveLang() {
+        const fromUrl = new URL(window.location.href).searchParams.get('lang');
+        if (fromUrl && supported.has(fromUrl)) {
+          localStorage.setItem('ilz_lang', fromUrl);
+          return fromUrl;
+        }
+        const stored = localStorage.getItem('ilz_lang');
+        if (stored && supported.has(stored)) {
+          return stored;
+        }
+        return 'zh';
+      }
+
+      function t(key) {
+        return messages[lang]?.[key] ?? messages.zh[key] ?? key;
+      }
+
+      function applyI18n() {
+        document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+        document.title = t('title');
+
+        document.querySelectorAll('[data-i18n]').forEach((element) => {
+          const key = element.getAttribute('data-i18n');
+          if (key) {
+            element.textContent = t(key);
+          }
+        });
+
+        document.querySelectorAll('[data-lang]').forEach((button) => {
+          if (!(button instanceof HTMLElement)) {
+            return;
+          }
+          button.classList.toggle('active', button.dataset.lang === lang);
+        });
+      }
+
+      function setLang(next) {
+        if (!supported.has(next)) {
+          return;
+        }
+        lang = next;
+        localStorage.setItem('ilz_lang', next);
+        applyI18n();
+      }
+
+      document.querySelectorAll('[data-lang]').forEach((button) => {
+        button.addEventListener('click', () => {
+          if (!(button instanceof HTMLElement)) {
+            return;
+          }
+          setLang(button.dataset.lang || 'zh');
+        });
+      });
+
+      applyI18n();
+    </script>
   </body>
 </html>

@@ -24,7 +24,7 @@ export function requireAuth() {
   return createMiddleware<{ Variables: AppVariables }>(async (c, next) => {
     const userId = c.get('userId');
     if (!userId) {
-      return c.json({ error: 'Unauthorized' }, 401);
+      return c.json({ error: '未登录或会话失效 / Unauthorized' }, 401);
     }
     await next();
   });

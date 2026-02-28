@@ -9,16 +9,16 @@ export function redirectRoutes(services: AppServices): Hono<{ Variables: AppVari
   app.get('/r/:slug', async (c) => {
     const slug = c.req.param('slug');
     if (!slug) {
-      return c.text('Not Found', 404);
+      return c.text('未找到资源 / Not Found', 404);
     }
     const slugRecord = await services.repo.getSlugRecord(slug);
     if (!slugRecord || slugRecord.status !== 'active') {
-      return c.text('Not Found', 404);
+      return c.text('未找到资源 / Not Found', 404);
     }
 
     const link = await services.repo.getLinkById(slugRecord.linkId);
     if (!link || link.status !== 'active') {
-      return c.text('Not Found', 404);
+      return c.text('未找到资源 / Not Found', 404);
     }
 
     const requestMeta = c.get('requestMeta');
@@ -35,11 +35,11 @@ export function redirectRoutes(services: AppServices): Hono<{ Variables: AppVari
   app.get('/q/:slug.svg', async (c) => {
     const slug = c.req.param('slug');
     if (!slug) {
-      return c.text('Not Found', 404);
+      return c.text('未找到资源 / Not Found', 404);
     }
     const slugRecord = await services.repo.getSlugRecord(slug);
     if (!slugRecord || slugRecord.status !== 'active') {
-      return c.text('Not Found', 404);
+      return c.text('未找到资源 / Not Found', 404);
     }
 
     const qr = qrcode(0, 'M');

@@ -2,70 +2,74 @@
 import '../styles/global.css';
 ---
 
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>Dashboard | iLINKZIP</title>
+    <title>控制台 | iLINKZIP</title>
   </head>
   <body>
     <main class="container" style="padding:2rem 0 4rem;">
-      <header style="display:flex;justify-content:space-between;align-items:center;gap:1rem;">
+      <header style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;">
         <div>
-          <h1 style="margin:0;">Dashboard</h1>
-          <p class="muted" style="margin:0.3rem 0 0;">Manage your links, QR endpoints and basic analytics.</p>
+          <h1 style="margin:0;" data-i18n="dashboard_title">控制台</h1>
+          <p class="muted" style="margin:0.3rem 0 0;" data-i18n="dashboard_subtitle">管理你的短链接、二维码入口和基础统计。</p>
         </div>
-        <div style="display:flex;gap:0.6rem;">
-          <a class="btn ghost" href="/">Home</a>
-          <button class="btn ghost" id="logout-btn" type="button">Log out</button>
+        <div style="display:flex;gap:0.6rem;align-items:center;">
+          <div class="lang-switch" aria-label="language switch">
+            <button type="button" class="lang-btn" data-lang="zh">中文</button>
+            <button type="button" class="lang-btn" data-lang="en">EN</button>
+          </div>
+          <a class="btn ghost" href="/" data-i18n="home">首页</a>
+          <button class="btn ghost" id="logout-btn" type="button" data-i18n="logout">退出登录</button>
         </div>
       </header>
 
       <section class="card" style="padding:1rem;margin-top:1.2rem;">
-        <h2 style="margin-top:0;">Create Link</h2>
+        <h2 style="margin-top:0;" data-i18n="create_title">创建链接</h2>
         <form id="create-form" style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;">
           <div>
-            <label for="kind">Kind</label>
+            <label for="kind" data-i18n="label_kind">类型</label>
             <select id="kind">
-              <option value="short">Short Link</option>
-              <option value="qrcode">Dynamic QR</option>
-              <option value="live_url">Live URL</option>
+              <option value="short" data-i18n="kind_short">短链接</option>
+              <option value="qrcode" data-i18n="kind_qrcode">活码</option>
+              <option value="live_url" data-i18n="kind_live">活网址</option>
             </select>
           </div>
           <div>
-            <label for="slug">Slug (optional)</label>
-            <input id="slug" placeholder="my-campaign" />
+            <label for="slug" data-i18n="label_slug">短码（可选）</label>
+            <input id="slug" placeholder="my-campaign" data-i18n-placeholder="placeholder_slug" />
           </div>
           <div style="grid-column:1 / -1;">
-            <label for="targetUrl">Target URL</label>
-            <input id="targetUrl" type="url" placeholder="https://example.com/landing" required />
+            <label for="targetUrl" data-i18n="label_target">目标 URL</label>
+            <input id="targetUrl" type="url" placeholder="https://example.com/landing" data-i18n-placeholder="placeholder_target" required />
           </div>
           <div style="grid-column:1 / -1;">
-            <label for="title">Title (optional)</label>
-            <input id="title" maxlength="120" placeholder="Spring Promo" />
+            <label for="title" data-i18n="label_title">标题（可选）</label>
+            <input id="title" maxlength="120" placeholder="Spring Promo" data-i18n-placeholder="placeholder_title" />
           </div>
           <div style="grid-column:1 / -1;">
-            <label>Turnstile</label>
+            <label data-i18n="label_turnstile">验证码</label>
             <div id="dashboard-turnstile"></div>
           </div>
           <div style="grid-column:1 / -1;display:flex;justify-content:space-between;align-items:center;gap:0.8rem;">
             <p id="create-status" class="muted" style="margin:0;"></p>
-            <button class="btn" type="submit">Create</button>
+            <button class="btn" type="submit" data-i18n="create_btn">创建</button>
           </div>
         </form>
       </section>
 
       <section class="card" style="padding:1rem;margin-top:1rem;overflow:auto;">
-        <h2 style="margin-top:0;">My Links</h2>
+        <h2 style="margin-top:0;" data-i18n="my_links">我的链接</h2>
         <table class="table" id="links-table">
           <thead>
             <tr>
-              <th>Title</th>
-              <th>Slug</th>
-              <th class="hide-mobile">Type</th>
-              <th>Status</th>
-              <th class="hide-mobile">Target</th>
-              <th>Actions</th>
+              <th data-i18n="table_title">标题</th>
+              <th data-i18n="table_slug">短码</th>
+              <th class="hide-mobile" data-i18n="table_type">类型</th>
+              <th data-i18n="table_status">状态</th>
+              <th class="hide-mobile" data-i18n="table_target">目标地址</th>
+              <th data-i18n="table_actions">操作</th>
             </tr>
           </thead>
           <tbody id="links-body"></tbody>
@@ -73,16 +77,190 @@ import '../styles/global.css';
       </section>
 
       <section class="card" style="padding:1rem;margin-top:1rem;">
-        <h2 style="margin-top:0;">7-Day Stats</h2>
-        <pre id="stats-box" class="muted" style="white-space:pre-wrap;background:#f7f9ff;padding:0.8rem;border-radius:10px;border:1px solid var(--border);">Select a link to inspect stats.</pre>
+        <h2 style="margin-top:0;" data-i18n="stats_title">7 日统计</h2>
+        <pre id="stats-box" class="muted" style="white-space:pre-wrap;background:#f7f9ff;padding:0.8rem;border-radius:10px;border:1px solid var(--border);" data-i18n="stats_hint">请选择链接查看统计。</pre>
       </section>
     </main>
 
     <script>
+      const messages = {
+        zh: {
+          page_title: '控制台 | iLINKZIP',
+          dashboard_title: '控制台',
+          dashboard_subtitle: '管理你的短链接、二维码入口和基础统计。',
+          home: '首页',
+          logout: '退出登录',
+          create_title: '创建链接',
+          label_kind: '类型',
+          kind_short: '短链接',
+          kind_qrcode: '活码',
+          kind_live: '活网址',
+          label_slug: '短码（可选）',
+          placeholder_slug: '自定义短码，如活动页',
+          label_target: '目标 URL',
+          placeholder_target: 'https://example.com/landing',
+          label_title: '标题（可选）',
+          placeholder_title: '春季活动页',
+          label_turnstile: '验证码',
+          create_btn: '创建',
+          my_links: '我的链接',
+          table_title: '标题',
+          table_slug: '短码',
+          table_type: '类型',
+          table_status: '状态',
+          table_target: '目标地址',
+          table_actions: '操作',
+          stats_title: '7 日统计',
+          stats_hint: '请选择链接查看统计。',
+          no_links: '暂无链接。',
+          action_stats: '统计',
+          action_edit: '修改',
+          action_disable: '停用',
+          action_open: '打开',
+          action_qr: '二维码',
+          status_creating: '创建中...',
+          status_create_failed: '创建失败',
+          status_created: '创建成功。',
+          links_load_failed: '加载链接失败',
+          stats_load_failed: '加载统计失败',
+          update_failed: '更新失败',
+          prompt_new_url: '请输入新的目标 URL：',
+          boot_failed: '初始化失败',
+          status_active: '生效中',
+          status_disabled: '已停用',
+          kind_short_label: '短链接',
+          kind_qrcode_label: '活码',
+          kind_live_label: '活网址',
+        },
+        en: {
+          page_title: 'Dashboard | iLINKZIP',
+          dashboard_title: 'Dashboard',
+          dashboard_subtitle: 'Manage your links, QR endpoints and basic analytics.',
+          home: 'Home',
+          logout: 'Log out',
+          create_title: 'Create Link',
+          label_kind: 'Kind',
+          kind_short: 'Short Link',
+          kind_qrcode: 'Dynamic QR',
+          kind_live: 'Live URL',
+          label_slug: 'Slug (optional)',
+          placeholder_slug: 'Custom slug, e.g. campaign',
+          label_target: 'Target URL',
+          placeholder_target: 'https://example.com/landing',
+          label_title: 'Title (optional)',
+          placeholder_title: 'Spring Promo',
+          label_turnstile: 'Turnstile',
+          create_btn: 'Create',
+          my_links: 'My Links',
+          table_title: 'Title',
+          table_slug: 'Slug',
+          table_type: 'Type',
+          table_status: 'Status',
+          table_target: 'Target',
+          table_actions: 'Actions',
+          stats_title: '7-Day Stats',
+          stats_hint: 'Select a link to inspect stats.',
+          no_links: 'No links yet.',
+          action_stats: 'Stats',
+          action_edit: 'Edit',
+          action_disable: 'Disable',
+          action_open: 'Open',
+          action_qr: 'QR',
+          status_creating: 'Creating...',
+          status_create_failed: 'Create failed',
+          status_created: 'Created.',
+          links_load_failed: 'Failed to load links',
+          stats_load_failed: 'Failed to load stats',
+          update_failed: 'Update failed',
+          prompt_new_url: 'New target URL:',
+          boot_failed: 'Bootstrap failed',
+          status_active: 'active',
+          status_disabled: 'disabled',
+          kind_short_label: 'short',
+          kind_qrcode_label: 'qrcode',
+          kind_live_label: 'live_url',
+        },
+      };
+
+      const supported = new Set(['zh', 'en']);
       const linksBody = document.getElementById('links-body');
       const statsBox = document.getElementById('stats-box');
       let turnstileToken = '';
       let turnstileWidgetId = null;
+      let lang = resolveLang();
+      let cachedLinks = [];
+      let statsTouched = false;
+
+      function resolveLang() {
+        const fromUrl = new URL(window.location.href).searchParams.get('lang');
+        if (fromUrl && supported.has(fromUrl)) {
+          localStorage.setItem('ilz_lang', fromUrl);
+          return fromUrl;
+        }
+        const stored = localStorage.getItem('ilz_lang');
+        if (stored && supported.has(stored)) {
+          return stored;
+        }
+        return 'zh';
+      }
+
+      function t(key) {
+        return messages[lang]?.[key] ?? messages.zh[key] ?? key;
+      }
+
+      function kindLabel(kind) {
+        if (kind === 'short') return t('kind_short_label');
+        if (kind === 'qrcode') return t('kind_qrcode_label');
+        if (kind === 'live_url') return t('kind_live_label');
+        return kind;
+      }
+
+      function statusLabel(status) {
+        if (status === 'active') return t('status_active');
+        if (status === 'disabled') return t('status_disabled');
+        return status;
+      }
+
+      function applyI18n() {
+        document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+        document.title = t('page_title');
+
+        document.querySelectorAll('[data-i18n]').forEach((element) => {
+          const key = element.getAttribute('data-i18n');
+          if (key) {
+            element.textContent = t(key);
+          }
+        });
+
+        document.querySelectorAll('[data-i18n-placeholder]').forEach((element) => {
+          const key = element.getAttribute('data-i18n-placeholder');
+          if (key && element instanceof HTMLInputElement) {
+            element.placeholder = t(key);
+          }
+        });
+
+        document.querySelectorAll('[data-lang]').forEach((button) => {
+          if (!(button instanceof HTMLElement)) {
+            return;
+          }
+          button.classList.toggle('active', button.dataset.lang === lang);
+        });
+
+        if (!statsTouched) {
+          statsBox.textContent = t('stats_hint');
+        }
+
+        renderLinks(cachedLinks);
+      }
+
+      function setLang(next) {
+        if (!supported.has(next)) {
+          return;
+        }
+        lang = next;
+        localStorage.setItem('ilz_lang', next);
+        applyI18n();
+      }
 
       async function setupTurnstile() {
         const configRes = await fetch('/api/v1/public/config');
@@ -122,7 +300,7 @@ import '../styles/global.css';
         linksBody.innerHTML = '';
 
         if (!links.length) {
-          linksBody.innerHTML = '<tr><td colspan="6" class="muted">No links yet.</td></tr>';
+          linksBody.innerHTML = `<tr><td colspan="6" class="muted">${t('no_links')}</td></tr>`;
           return;
         }
 
@@ -133,15 +311,15 @@ import '../styles/global.css';
           tr.innerHTML = `
             <td>${link.title || '-'}</td>
             <td><code>${link.slug}</code></td>
-            <td class="hide-mobile">${link.kind}</td>
-            <td>${link.status}</td>
+            <td class="hide-mobile">${kindLabel(link.kind)}</td>
+            <td>${statusLabel(link.status)}</td>
             <td class="hide-mobile"><a href="${link.targetUrl}" target="_blank" rel="noreferrer">${link.targetUrl}</a></td>
             <td>
-              <button class="btn ghost" data-action="stats" data-id="${link.id}">Stats</button>
-              <button class="btn ghost" data-action="edit" data-id="${link.id}">Edit</button>
-              <button class="btn ghost" data-action="disable" data-id="${link.id}">Disable</button>
-              <a class="btn ghost" href="${shortUrl}" target="_blank" rel="noreferrer">Open</a>
-              <a class="btn ghost" href="${qrUrl}" target="_blank" rel="noreferrer">QR</a>
+              <button class="btn ghost" data-action="stats" data-id="${link.id}">${t('action_stats')}</button>
+              <button class="btn ghost" data-action="edit" data-id="${link.id}">${t('action_edit')}</button>
+              <button class="btn ghost" data-action="disable" data-id="${link.id}">${t('action_disable')}</button>
+              <a class="btn ghost" href="${shortUrl}" target="_blank" rel="noreferrer">${t('action_open')}</a>
+              <a class="btn ghost" href="${qrUrl}" target="_blank" rel="noreferrer">${t('action_qr')}</a>
             </td>
           `;
           linksBody.appendChild(tr);
@@ -151,17 +329,18 @@ import '../styles/global.css';
       async function loadLinks() {
         const res = await fetch('/api/v1/links');
         if (!res.ok) {
-          throw new Error('Failed to load links');
+          throw new Error(t('links_load_failed'));
         }
         const body = await res.json();
-        renderLinks(body.links || []);
+        cachedLinks = body.links || [];
+        renderLinks(cachedLinks);
       }
 
       async function createLink(event) {
         event.preventDefault();
         const status = document.getElementById('create-status');
         status.className = 'muted';
-        status.textContent = 'Creating...';
+        status.textContent = t('status_creating');
 
         const payload = {
           kind: document.getElementById('kind').value,
@@ -180,12 +359,12 @@ import '../styles/global.css';
         const body = await res.json().catch(() => ({}));
         if (!res.ok) {
           status.className = 'error';
-          status.textContent = body.error || 'Create failed';
+          status.textContent = body.error || t('status_create_failed');
           return;
         }
 
         status.className = 'success';
-        status.textContent = 'Created.';
+        status.textContent = t('status_created');
         document.getElementById('create-form').reset();
         if (window.turnstile && turnstileWidgetId !== null) {
           window.turnstile.reset(turnstileWidgetId);
@@ -198,10 +377,12 @@ import '../styles/global.css';
         const res = await fetch(`/api/v1/links/${linkId}/stats?range=7d`);
         const body = await res.json().catch(() => ({}));
         if (!res.ok) {
-          statsBox.textContent = body.error || 'Failed to load stats';
+          statsTouched = true;
+          statsBox.textContent = body.error || t('stats_load_failed');
           return;
         }
 
+        statsTouched = true;
         statsBox.textContent = JSON.stringify(body.stats, null, 2);
       }
 
@@ -214,7 +395,7 @@ import '../styles/global.css';
 
         if (!res.ok) {
           const body = await res.json().catch(() => ({}));
-          throw new Error(body.error || 'Update failed');
+          throw new Error(body.error || t('update_failed'));
         }
 
         await loadLinks();
@@ -226,6 +407,15 @@ import '../styles/global.css';
         });
         window.location.href = '/login';
       }
+
+      document.querySelectorAll('[data-lang]').forEach((button) => {
+        button.addEventListener('click', () => {
+          if (!(button instanceof HTMLElement)) {
+            return;
+          }
+          setLang(button.dataset.lang || 'zh');
+        });
+      });
 
       document.getElementById('create-form').addEventListener('submit', createLink);
       document.getElementById('logout-btn').addEventListener('click', logout);
@@ -259,7 +449,7 @@ import '../styles/global.css';
           }
 
           if (action === 'edit') {
-            const targetUrl = prompt('New target URL:');
+            const targetUrl = prompt(t('prompt_new_url'));
             if (!targetUrl) {
               return;
             }
@@ -270,6 +460,8 @@ import '../styles/global.css';
         }
       });
 
+      applyI18n();
+
       (async () => {
         const ok = await assertAuthenticated();
         if (ok) {
@@ -277,7 +469,8 @@ import '../styles/global.css';
           await loadLinks();
         }
       })().catch((error) => {
-        statsBox.textContent = `Bootstrap failed: ${error.message}`;
+        statsTouched = true;
+        statsBox.textContent = `${t('boot_failed')}: ${error.message}`;
       });
     </script>
   </body>

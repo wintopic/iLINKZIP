@@ -2,39 +2,132 @@
 import '../styles/global.css';
 ---
 
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>Sign In | iLINKZIP</title>
+    <title>登录 | iLINKZIP</title>
   </head>
   <body>
     <main class="container" style="max-width:560px;padding:5rem 0;">
       <section class="card" style="padding:1.5rem 1.3rem;">
-        <h1 style="margin-top:0;">Sign in with magic link</h1>
-        <p class="muted">Enter your email. We will send a secure sign-in link valid for 15 minutes.</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:0.8rem;">
+          <h1 style="margin:0;" data-i18n="title">魔法链接登录</h1>
+          <div class="lang-switch" aria-label="language switch">
+            <button type="button" class="lang-btn" data-lang="zh">中文</button>
+            <button type="button" class="lang-btn" data-lang="en">EN</button>
+          </div>
+        </div>
+        <p class="muted" data-i18n="subtitle">输入邮箱后，系统会发送 15 分钟有效的安全登录链接。</p>
 
         <form id="login-form" style="display:grid;gap:1rem;margin-top:1rem;">
           <div>
-            <label for="email">Email</label>
-            <input id="email" type="email" autocomplete="email" required placeholder="you@domain.com" />
+            <label for="email" data-i18n="label_email">邮箱</label>
+            <input id="email" type="email" autocomplete="email" required placeholder="you@domain.com" data-i18n-placeholder="placeholder_email" />
           </div>
 
           <div>
-            <label>Turnstile</label>
+            <label data-i18n="label_turnstile">验证码</label>
             <div id="turnstile-widget"></div>
           </div>
 
-          <button class="btn" type="submit">Send Magic Link</button>
+          <button class="btn" type="submit" data-i18n="btn_submit">发送魔法链接</button>
         </form>
 
         <p id="status" class="muted" style="margin-top:0.9rem;"></p>
-        <p style="margin:0.5rem 0 0;"><a href="/">Back to home</a></p>
+        <p style="margin:0.5rem 0 0;"><a href="/" data-i18n="back_home">返回首页</a></p>
       </section>
     </main>
 
     <script>
+      const messages = {
+        zh: {
+          page_title: '登录 | iLINKZIP',
+          title: '魔法链接登录',
+          subtitle: '输入邮箱后，系统会发送 15 分钟有效的安全登录链接。',
+          label_email: '邮箱',
+          placeholder_email: 'you@domain.com',
+          label_turnstile: '验证码',
+          btn_submit: '发送魔法链接',
+          back_home: '返回首页',
+          turnstile_disabled: '当前部署未启用 Turnstile 验证。',
+          sending: '发送中...',
+          send_failed: '发送失败',
+          sent_ok: '邮件已发送，请前往邮箱查收。',
+          boot_failed: '初始化失败',
+        },
+        en: {
+          page_title: 'Sign In | iLINKZIP',
+          title: 'Sign in with magic link',
+          subtitle: 'Enter your email. We will send a secure sign-in link valid for 15 minutes.',
+          label_email: 'Email',
+          placeholder_email: 'you@domain.com',
+          label_turnstile: 'Turnstile',
+          btn_submit: 'Send Magic Link',
+          back_home: 'Back to Home',
+          turnstile_disabled: 'Turnstile is disabled for this deployment.',
+          sending: 'Sending...',
+          send_failed: 'Failed to send magic link',
+          sent_ok: 'Email sent. Please check your inbox.',
+          boot_failed: 'Bootstrap failed',
+        },
+      };
+
+      const supported = new Set(['zh', 'en']);
       let turnstileToken = '';
+      let lang = resolveLang();
+
+      function resolveLang() {
+        const fromUrl = new URL(window.location.href).searchParams.get('lang');
+        if (fromUrl && supported.has(fromUrl)) {
+          localStorage.setItem('ilz_lang', fromUrl);
+          return fromUrl;
+        }
+        const stored = localStorage.getItem('ilz_lang');
+        if (stored && supported.has(stored)) {
+          return stored;
+        }
+        return 'zh';
+      }
+
+      function t(key) {
+        return messages[lang]?.[key] ?? messages.zh[key] ?? key;
+      }
+
+      function applyI18n() {
+        document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+        document.title = t('page_title');
+
+        document.querySelectorAll('[data-i18n]').forEach((element) => {
+          const key = element.getAttribute('data-i18n');
+          if (key) {
+            element.textContent = t(key);
+          }
+        });
+
+        document.querySelectorAll('[data-i18n-placeholder]').forEach((element) => {
+          const key = element.getAttribute('data-i18n-placeholder');
+          if (key && element instanceof HTMLInputElement) {
+            element.placeholder = t(key);
+          }
+        });
+
+        document.querySelectorAll('[data-lang]').forEach((button) => {
+          if (!(button instanceof HTMLElement)) {
+            return;
+          }
+          button.classList.toggle('active', button.dataset.lang === lang);
+        });
+      }
+
+      function setLang(next) {
+        if (!supported.has(next)) {
+          return;
+        }
+        lang = next;
+        localStorage.setItem('ilz_lang', next);
+        applyI18n();
+      }
 
       async function boot() {
         const status = document.getElementById('status');
@@ -42,7 +135,7 @@ import '../styles/global.css';
         const config = await res.json();
 
         if (!config.turnstileSiteKey) {
-          status.textContent = 'Turnstile is disabled for this deployment.';
+          status.textContent = t('turnstile_disabled');
           return;
         }
 
@@ -64,11 +157,20 @@ import '../styles/global.css';
         document.head.appendChild(script);
       }
 
+      document.querySelectorAll('[data-lang]').forEach((button) => {
+        button.addEventListener('click', () => {
+          if (!(button instanceof HTMLElement)) {
+            return;
+          }
+          setLang(button.dataset.lang || 'zh');
+        });
+      });
+
       document.getElementById('login-form').addEventListener('submit', async (event) => {
         event.preventDefault();
         const status = document.getElementById('status');
         status.className = 'muted';
-        status.textContent = 'Sending...';
+        status.textContent = t('sending');
 
         const email = document.getElementById('email').value;
         const response = await fetch('/api/v1/auth/request-magic-link', {
@@ -85,18 +187,20 @@ import '../styles/global.css';
         const body = await response.json().catch(() => ({}));
         if (!response.ok) {
           status.className = 'error';
-          status.textContent = body.error || 'Failed to send magic link';
+          status.textContent = body.error || t('send_failed');
           return;
         }
 
         status.className = 'success';
-        status.textContent = 'Email sent. Please check your inbox.';
+        status.textContent = t('sent_ok');
       });
+
+      applyI18n();
 
       boot().catch((error) => {
         const status = document.getElementById('status');
         status.className = 'error';
-        status.textContent = `Bootstrap failed: ${error.message}`;
+        status.textContent = `${t('boot_failed')}: ${error.message}`;
       });
     </script>
   </body>

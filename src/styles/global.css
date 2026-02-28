@@ -102,6 +102,28 @@ textarea {
   color: #0a7a45;
 }
 
+.lang-switch {
+  display: inline-flex;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.lang-btn {
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--muted);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  padding: 0.2rem 0.55rem;
+  cursor: pointer;
+}
+
+.lang-btn.active {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+}
+
 @media (max-width: 800px) {
   .hide-mobile {
     display: none;

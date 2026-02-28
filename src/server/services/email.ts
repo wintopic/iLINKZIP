@@ -21,8 +21,8 @@ export class ResendEmailService implements EmailService {
       body: JSON.stringify({
         from: this.fromEmail,
         to: email,
-        subject: 'Your iLINKZIP sign-in link',
-        html: `<p>Click to sign in:</p><p><a href="${url}">${url}</a></p><p>This link expires in 15 minutes.</p>`,
+        subject: 'iLINKZIP 登录链接 / Sign-in link',
+        html: `<p><strong>中文</strong></p><p>点击下方链接登录：</p><p><a href="${url}">${url}</a></p><p>链接 15 分钟内有效。</p><hr/><p><strong>English</strong></p><p>Click the link below to sign in:</p><p><a href="${url}">${url}</a></p><p>This link expires in 15 minutes.</p>`,
       }),
     });
 

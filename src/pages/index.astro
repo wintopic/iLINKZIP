@@ -2,33 +2,36 @@
 import '../styles/global.css';
 ---
 
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>iLINKZIP - Dynamic QR, Short Links, Live URLs</title>
+    <title>iLINKZIP - 动态二维码、短链接与活网址</title>
   </head>
   <body>
-    <header class="container" style="display:flex;justify-content:space-between;align-items:center;padding:1.25rem 0;">
+    <header class="container" style="display:flex;justify-content:space-between;align-items:center;padding:1.25rem 0;gap:1rem;">
       <strong style="font-size:1.2rem;">iLINKZIP</strong>
-      <nav style="display:flex;gap:0.8rem;">
-        <a class="btn ghost" href="/login">Sign In</a>
-        <a class="btn" href="/dashboard">Dashboard</a>
+      <nav style="display:flex;gap:0.8rem;align-items:center;">
+        <div class="lang-switch" aria-label="language switch">
+          <button type="button" class="lang-btn" data-lang="zh">中文</button>
+          <button type="button" class="lang-btn" data-lang="en">EN</button>
+        </div>
+        <a class="btn ghost" href="/login" data-i18n="nav_signin">登录</a>
+        <a class="btn" href="/dashboard" data-i18n="nav_dashboard">控制台</a>
       </nav>
     </header>
 
     <main class="container" style="padding:2rem 0 4rem;">
       <section class="card" style="padding:2.5rem;display:grid;grid-template-columns:1.1fr 0.9fr;gap:2rem;">
         <div>
-          <p class="muted" style="text-transform:uppercase;letter-spacing:0.08em;">Deploy on Vercel + Cloudflare Pages</p>
-          <h1 style="font-size:2.4rem;line-height:1.1;margin:0.4rem 0 1rem;">One link. Infinite updates.</h1>
-          <p class="muted" style="font-size:1.05rem;line-height:1.6;">
-            Build dynamic QR codes, short links and editable live URLs with S3-only storage.
-            Change destination anytime without replacing the QR image.
+          <p class="muted" style="text-transform:uppercase;letter-spacing:0.08em;" data-i18n="hero_tag">支持 Vercel + Cloudflare Pages 部署</p>
+          <h1 style="font-size:2.4rem;line-height:1.1;margin:0.4rem 0 1rem;" data-i18n="hero_title">一个链接，持续生效。</h1>
+          <p class="muted" style="font-size:1.05rem;line-height:1.6;" data-i18n="hero_desc">
+            用 S3-only 存储构建动态二维码、短链接和可编辑活网址。无需更换二维码，也能随时更新目标地址。
           </p>
           <div style="display:flex;gap:0.8rem;margin-top:1.3rem;">
-            <a class="btn" href="/dashboard">Open Dashboard</a>
-            <a class="btn ghost" href="/login">Get Magic Link</a>
+            <a class="btn" href="/dashboard" data-i18n="hero_cta_dashboard">进入控制台</a>
+            <a class="btn ghost" href="/login" data-i18n="hero_cta_login">获取魔法登录链接</a>
           </div>
         </div>
         <div class="card" style="padding:1rem;background:linear-gradient(155deg,#f5faff,#f5fff9);">
@@ -37,24 +40,133 @@ GET /q/:slug.svg
 GET /r/:slug
 PATCH /api/v1/links/:id
           </pre>
-          <p class="muted" style="text-align:center;margin:0.8rem 0 0;">QR is stable, destination is mutable.</p>
+          <p class="muted" style="text-align:center;margin:0.8rem 0 0;" data-i18n="hero_note">二维码地址不变，跳转目标可变。</p>
         </div>
       </section>
 
       <section style="margin-top:1.4rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
         <article class="card" style="padding:1rem;">
-          <h3>Dynamic QR</h3>
-          <p class="muted">Use <code>/q/:slug.svg</code> as printable QR source and update target later.</p>
+          <h3 data-i18n="feature_qr_title">活码</h3>
+          <p class="muted" data-i18n-html="feature_qr_desc">使用 <code>/q/:slug.svg</code> 作为可打印二维码来源，后续可改目标地址。</p>
         </article>
         <article class="card" style="padding:1rem;">
-          <h3>Short Link</h3>
-          <p class="muted">Every link resolves through <code>/r/:slug</code> with global redirection support.</p>
+          <h3 data-i18n="feature_short_title">短链接</h3>
+          <p class="muted" data-i18n-html="feature_short_desc">所有链接通过 <code>/r/:slug</code> 统一跳转，便于持续运营。</p>
         </article>
         <article class="card" style="padding:1rem;">
-          <h3>Basic Analytics</h3>
-          <p class="muted">See total clicks, 7-day trend, country and device split per link.</p>
+          <h3 data-i18n="feature_analytics_title">基础统计</h3>
+          <p class="muted" data-i18n="feature_analytics_desc">查看总点击、7 日趋势、国家和设备分布。</p>
         </article>
       </section>
     </main>
+
+    <script>
+      const messages = {
+        zh: {
+          title: 'iLINKZIP - 动态二维码、短链接与活网址',
+          nav_signin: '登录',
+          nav_dashboard: '控制台',
+          hero_tag: '支持 Vercel + Cloudflare Pages 部署',
+          hero_title: '一个链接，持续生效。',
+          hero_desc: '用 S3-only 存储构建动态二维码、短链接和可编辑活网址。无需更换二维码，也能随时更新目标地址。',
+          hero_cta_dashboard: '进入控制台',
+          hero_cta_login: '获取魔法登录链接',
+          hero_note: '二维码地址不变，跳转目标可变。',
+          feature_qr_title: '活码',
+          feature_qr_desc: '使用 <code>/q/:slug.svg</code> 作为可打印二维码来源，后续可改目标地址。',
+          feature_short_title: '短链接',
+          feature_short_desc: '所有链接通过 <code>/r/:slug</code> 统一跳转，便于持续运营。',
+          feature_analytics_title: '基础统计',
+          feature_analytics_desc: '查看总点击、7 日趋势、国家和设备分布。',
+        },
+        en: {
+          title: 'iLINKZIP - Dynamic QR, Short Links, Live URLs',
+          nav_signin: 'Sign In',
+          nav_dashboard: 'Dashboard',
+          hero_tag: 'Deploy on Vercel + Cloudflare Pages',
+          hero_title: 'One link. Infinite updates.',
+          hero_desc: 'Build dynamic QR codes, short links, and editable live URLs with S3-only storage. Change destination anytime without replacing the QR image.',
+          hero_cta_dashboard: 'Open Dashboard',
+          hero_cta_login: 'Get Magic Link',
+          hero_note: 'QR is stable, destination is mutable.',
+          feature_qr_title: 'Dynamic QR',
+          feature_qr_desc: 'Use <code>/q/:slug.svg</code> as printable QR source and update target later.',
+          feature_short_title: 'Short Link',
+          feature_short_desc: 'Every link resolves through <code>/r/:slug</code> with unified redirection.',
+          feature_analytics_title: 'Basic Analytics',
+          feature_analytics_desc: 'See total clicks, 7-day trend, country and device split per link.',
+        },
+      };
+
+      const supported = new Set(['zh', 'en']);
+
+      function resolveLang() {
+        const params = new URL(window.location.href).searchParams;
+        const fromUrl = params.get('lang');
+        if (fromUrl && supported.has(fromUrl)) {
+          localStorage.setItem('ilz_lang', fromUrl);
+          return fromUrl;
+        }
+
+        const stored = localStorage.getItem('ilz_lang');
+        if (stored && supported.has(stored)) {
+          return stored;
+        }
+
+        return 'zh';
+      }
+
+      let lang = resolveLang();
+
+      function t(key) {
+        return messages[lang]?.[key] ?? messages.zh[key] ?? key;
+      }
+
+      function applyI18n() {
+        document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+        document.title = t('title');
+
+        document.querySelectorAll('[data-i18n]').forEach((element) => {
+          const key = element.getAttribute('data-i18n');
+          if (key) {
+            element.textContent = t(key);
+          }
+        });
+
+        document.querySelectorAll('[data-i18n-html]').forEach((element) => {
+          const key = element.getAttribute('data-i18n-html');
+          if (key) {
+            element.innerHTML = t(key);
+          }
+        });
+
+        document.querySelectorAll('[data-lang]').forEach((button) => {
+          if (!(button instanceof HTMLElement)) {
+            return;
+          }
+          button.classList.toggle('active', button.dataset.lang === lang);
+        });
+      }
+
+      function setLang(next) {
+        if (!supported.has(next)) {
+          return;
+        }
+        lang = next;
+        localStorage.setItem('ilz_lang', next);
+        applyI18n();
+      }
+
+      document.querySelectorAll('[data-lang]').forEach((button) => {
+        button.addEventListener('click', () => {
+          if (!(button instanceof HTMLElement)) {
+            return;
+          }
+          setLang(button.dataset.lang || 'zh');
+        });
+      });
+
+      applyI18n();
+    </script>
   </body>
 </html>
