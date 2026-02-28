@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/r/:slug", "destination": "/api/v1/r/:slug" },
+    { "source": "/q/:slug.svg", "destination": "/api/v1/q/:slug.svg" }
+  ]
+}

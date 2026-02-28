@@ -1,0 +1,103 @@
+---
+import '../styles/global.css';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Sign In | iLINKZIP</title>
+  </head>
+  <body>
+    <main class="container" style="max-width:560px;padding:5rem 0;">
+      <section class="card" style="padding:1.5rem 1.3rem;">
+        <h1 style="margin-top:0;">Sign in with magic link</h1>
+        <p class="muted">Enter your email. We will send a secure sign-in link valid for 15 minutes.</p>
+
+        <form id="login-form" style="display:grid;gap:1rem;margin-top:1rem;">
+          <div>
+            <label for="email">Email</label>
+            <input id="email" type="email" autocomplete="email" required placeholder="you@domain.com" />
+          </div>
+
+          <div>
+            <label>Turnstile</label>
+            <div id="turnstile-widget"></div>
+          </div>
+
+          <button class="btn" type="submit">Send Magic Link</button>
+        </form>
+
+        <p id="status" class="muted" style="margin-top:0.9rem;"></p>
+        <p style="margin:0.5rem 0 0;"><a href="/">Back to home</a></p>
+      </section>
+    </main>
+
+    <script>
+      let turnstileToken = '';
+
+      async function boot() {
+        const status = document.getElementById('status');
+        const res = await fetch('/api/v1/public/config');
+        const config = await res.json();
+
+        if (!config.turnstileSiteKey) {
+          status.textContent = 'Turnstile is disabled for this deployment.';
+          return;
+        }
+
+        const script = document.createElement('script');
+        script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+        script.async = true;
+        script.defer = true;
+        script.onload = () => {
+          if (window.turnstile) {
+            window.turnstile.render('#turnstile-widget', {
+              sitekey: config.turnstileSiteKey,
+              callback: (token) => {
+                turnstileToken = token;
+              },
+            });
+          }
+        };
+
+        document.head.appendChild(script);
+      }
+
+      document.getElementById('login-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const status = document.getElementById('status');
+        status.className = 'muted';
+        status.textContent = 'Sending...';
+
+        const email = document.getElementById('email').value;
+        const response = await fetch('/api/v1/auth/request-magic-link', {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify({
+            email,
+            turnstileToken,
+          }),
+        });
+
+        const body = await response.json().catch(() => ({}));
+        if (!response.ok) {
+          status.className = 'error';
+          status.textContent = body.error || 'Failed to send magic link';
+          return;
+        }
+
+        status.className = 'success';
+        status.textContent = 'Email sent. Please check your inbox.';
+      });
+
+      boot().catch((error) => {
+        const status = document.getElementById('status');
+        status.className = 'error';
+        status.textContent = `Bootstrap failed: ${error.message}`;
+      });
+    </script>
+  </body>
+</html>

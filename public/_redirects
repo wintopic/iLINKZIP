@@ -1,0 +1,2 @@
+/r/* /api/v1/r/:splat 200
+/q/* /api/v1/q/:splat 200

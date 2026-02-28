@@ -1,0 +1,60 @@
+---
+import '../styles/global.css';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>iLINKZIP - Dynamic QR, Short Links, Live URLs</title>
+  </head>
+  <body>
+    <header class="container" style="display:flex;justify-content:space-between;align-items:center;padding:1.25rem 0;">
+      <strong style="font-size:1.2rem;">iLINKZIP</strong>
+      <nav style="display:flex;gap:0.8rem;">
+        <a class="btn ghost" href="/login">Sign In</a>
+        <a class="btn" href="/dashboard">Dashboard</a>
+      </nav>
+    </header>
+
+    <main class="container" style="padding:2rem 0 4rem;">
+      <section class="card" style="padding:2.5rem;display:grid;grid-template-columns:1.1fr 0.9fr;gap:2rem;">
+        <div>
+          <p class="muted" style="text-transform:uppercase;letter-spacing:0.08em;">Deploy on Vercel + Cloudflare Pages</p>
+          <h1 style="font-size:2.4rem;line-height:1.1;margin:0.4rem 0 1rem;">One link. Infinite updates.</h1>
+          <p class="muted" style="font-size:1.05rem;line-height:1.6;">
+            Build dynamic QR codes, short links and editable live URLs with S3-only storage.
+            Change destination anytime without replacing the QR image.
+          </p>
+          <div style="display:flex;gap:0.8rem;margin-top:1.3rem;">
+            <a class="btn" href="/dashboard">Open Dashboard</a>
+            <a class="btn ghost" href="/login">Get Magic Link</a>
+          </div>
+        </div>
+        <div class="card" style="padding:1rem;background:linear-gradient(155deg,#f5faff,#f5fff9);">
+          <pre style="margin:0;padding:1rem;border:1px dashed var(--border);border-radius:12px;background:#fff;overflow:auto;">
+GET /q/:slug.svg
+GET /r/:slug
+PATCH /api/v1/links/:id
+          </pre>
+          <p class="muted" style="text-align:center;margin:0.8rem 0 0;">QR is stable, destination is mutable.</p>
+        </div>
+      </section>
+
+      <section style="margin-top:1.4rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
+        <article class="card" style="padding:1rem;">
+          <h3>Dynamic QR</h3>
+          <p class="muted">Use <code>/q/:slug.svg</code> as printable QR source and update target later.</p>
+        </article>
+        <article class="card" style="padding:1rem;">
+          <h3>Short Link</h3>
+          <p class="muted">Every link resolves through <code>/r/:slug</code> with global redirection support.</p>
+        </article>
+        <article class="card" style="padding:1rem;">
+          <h3>Basic Analytics</h3>
+          <p class="muted">See total clicks, 7-day trend, country and device split per link.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

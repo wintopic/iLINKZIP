@@ -1,0 +1,284 @@
+---
+import '../styles/global.css';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Dashboard | iLINKZIP</title>
+  </head>
+  <body>
+    <main class="container" style="padding:2rem 0 4rem;">
+      <header style="display:flex;justify-content:space-between;align-items:center;gap:1rem;">
+        <div>
+          <h1 style="margin:0;">Dashboard</h1>
+          <p class="muted" style="margin:0.3rem 0 0;">Manage your links, QR endpoints and basic analytics.</p>
+        </div>
+        <div style="display:flex;gap:0.6rem;">
+          <a class="btn ghost" href="/">Home</a>
+          <button class="btn ghost" id="logout-btn" type="button">Log out</button>
+        </div>
+      </header>
+
+      <section class="card" style="padding:1rem;margin-top:1.2rem;">
+        <h2 style="margin-top:0;">Create Link</h2>
+        <form id="create-form" style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;">
+          <div>
+            <label for="kind">Kind</label>
+            <select id="kind">
+              <option value="short">Short Link</option>
+              <option value="qrcode">Dynamic QR</option>
+              <option value="live_url">Live URL</option>
+            </select>
+          </div>
+          <div>
+            <label for="slug">Slug (optional)</label>
+            <input id="slug" placeholder="my-campaign" />
+          </div>
+          <div style="grid-column:1 / -1;">
+            <label for="targetUrl">Target URL</label>
+            <input id="targetUrl" type="url" placeholder="https://example.com/landing" required />
+          </div>
+          <div style="grid-column:1 / -1;">
+            <label for="title">Title (optional)</label>
+            <input id="title" maxlength="120" placeholder="Spring Promo" />
+          </div>
+          <div style="grid-column:1 / -1;">
+            <label>Turnstile</label>
+            <div id="dashboard-turnstile"></div>
+          </div>
+          <div style="grid-column:1 / -1;display:flex;justify-content:space-between;align-items:center;gap:0.8rem;">
+            <p id="create-status" class="muted" style="margin:0;"></p>
+            <button class="btn" type="submit">Create</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card" style="padding:1rem;margin-top:1rem;overflow:auto;">
+        <h2 style="margin-top:0;">My Links</h2>
+        <table class="table" id="links-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Slug</th>
+              <th class="hide-mobile">Type</th>
+              <th>Status</th>
+              <th class="hide-mobile">Target</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="links-body"></tbody>
+        </table>
+      </section>
+
+      <section class="card" style="padding:1rem;margin-top:1rem;">
+        <h2 style="margin-top:0;">7-Day Stats</h2>
+        <pre id="stats-box" class="muted" style="white-space:pre-wrap;background:#f7f9ff;padding:0.8rem;border-radius:10px;border:1px solid var(--border);">Select a link to inspect stats.</pre>
+      </section>
+    </main>
+
+    <script>
+      const linksBody = document.getElementById('links-body');
+      const statsBox = document.getElementById('stats-box');
+      let turnstileToken = '';
+      let turnstileWidgetId = null;
+
+      async function setupTurnstile() {
+        const configRes = await fetch('/api/v1/public/config');
+        const config = await configRes.json();
+
+        if (!config.turnstileSiteKey) {
+          return;
+        }
+
+        const script = document.createElement('script');
+        script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+        script.async = true;
+        script.defer = true;
+        script.onload = () => {
+          if (window.turnstile) {
+            turnstileWidgetId = window.turnstile.render('#dashboard-turnstile', {
+              sitekey: config.turnstileSiteKey,
+              callback: (token) => {
+                turnstileToken = token;
+              },
+            });
+          }
+        };
+        document.head.appendChild(script);
+      }
+
+      async function assertAuthenticated() {
+        const res = await fetch('/api/v1/auth/me');
+        if (!res.ok) {
+          window.location.href = '/login';
+          return false;
+        }
+        return true;
+      }
+
+      function renderLinks(links) {
+        linksBody.innerHTML = '';
+
+        if (!links.length) {
+          linksBody.innerHTML = '<tr><td colspan="6" class="muted">No links yet.</td></tr>';
+          return;
+        }
+
+        for (const link of links) {
+          const tr = document.createElement('tr');
+          const shortUrl = `${window.location.origin}/r/${link.slug}`;
+          const qrUrl = `${window.location.origin}/q/${link.slug}.svg`;
+          tr.innerHTML = `
+            <td>${link.title || '-'}</td>
+            <td><code>${link.slug}</code></td>
+            <td class="hide-mobile">${link.kind}</td>
+            <td>${link.status}</td>
+            <td class="hide-mobile"><a href="${link.targetUrl}" target="_blank" rel="noreferrer">${link.targetUrl}</a></td>
+            <td>
+              <button class="btn ghost" data-action="stats" data-id="${link.id}">Stats</button>
+              <button class="btn ghost" data-action="edit" data-id="${link.id}">Edit</button>
+              <button class="btn ghost" data-action="disable" data-id="${link.id}">Disable</button>
+              <a class="btn ghost" href="${shortUrl}" target="_blank" rel="noreferrer">Open</a>
+              <a class="btn ghost" href="${qrUrl}" target="_blank" rel="noreferrer">QR</a>
+            </td>
+          `;
+          linksBody.appendChild(tr);
+        }
+      }
+
+      async function loadLinks() {
+        const res = await fetch('/api/v1/links');
+        if (!res.ok) {
+          throw new Error('Failed to load links');
+        }
+        const body = await res.json();
+        renderLinks(body.links || []);
+      }
+
+      async function createLink(event) {
+        event.preventDefault();
+        const status = document.getElementById('create-status');
+        status.className = 'muted';
+        status.textContent = 'Creating...';
+
+        const payload = {
+          kind: document.getElementById('kind').value,
+          slug: document.getElementById('slug').value || undefined,
+          targetUrl: document.getElementById('targetUrl').value,
+          title: document.getElementById('title').value || undefined,
+          turnstileToken: turnstileToken || undefined,
+        };
+
+        const res = await fetch('/api/v1/links', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        const body = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          status.className = 'error';
+          status.textContent = body.error || 'Create failed';
+          return;
+        }
+
+        status.className = 'success';
+        status.textContent = 'Created.';
+        document.getElementById('create-form').reset();
+        if (window.turnstile && turnstileWidgetId !== null) {
+          window.turnstile.reset(turnstileWidgetId);
+          turnstileToken = '';
+        }
+        await loadLinks();
+      }
+
+      async function showStats(linkId) {
+        const res = await fetch(`/api/v1/links/${linkId}/stats?range=7d`);
+        const body = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          statsBox.textContent = body.error || 'Failed to load stats';
+          return;
+        }
+
+        statsBox.textContent = JSON.stringify(body.stats, null, 2);
+      }
+
+      async function updateLink(linkId, payload) {
+        const res = await fetch(`/api/v1/links/${linkId}`, {
+          method: 'PATCH',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (!res.ok) {
+          const body = await res.json().catch(() => ({}));
+          throw new Error(body.error || 'Update failed');
+        }
+
+        await loadLinks();
+      }
+
+      async function logout() {
+        await fetch('/api/v1/auth/logout', {
+          method: 'POST',
+        });
+        window.location.href = '/login';
+      }
+
+      document.getElementById('create-form').addEventListener('submit', createLink);
+      document.getElementById('logout-btn').addEventListener('click', logout);
+
+      linksBody.addEventListener('click', async (event) => {
+        const target = event.target;
+        if (!(target instanceof HTMLElement)) {
+          return;
+        }
+
+        const button = target.closest('button');
+        if (!button) {
+          return;
+        }
+
+        const action = button.dataset.action;
+        const id = button.dataset.id;
+        if (!action || !id) {
+          return;
+        }
+
+        try {
+          if (action === 'stats') {
+            await showStats(id);
+            return;
+          }
+
+          if (action === 'disable') {
+            await updateLink(id, { status: 'disabled' });
+            return;
+          }
+
+          if (action === 'edit') {
+            const targetUrl = prompt('New target URL:');
+            if (!targetUrl) {
+              return;
+            }
+            await updateLink(id, { targetUrl });
+          }
+        } catch (error) {
+          alert(error.message);
+        }
+      });
+
+      (async () => {
+        const ok = await assertAuthenticated();
+        if (ok) {
+          await setupTurnstile();
+          await loadLinks();
+        }
+      })().catch((error) => {
+        statsBox.textContent = `Bootstrap failed: ${error.message}`;
+      });
+    </script>
+  </body>
+</html>

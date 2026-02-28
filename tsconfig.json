@@ -1,0 +1,12 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@shared/*": ["shared/*"],
+      "@server/*": ["src/server/*"]
+    },
+    "types": ["node"]
+  },
+  "include": ["src", "api", "functions", "shared", "tests", "vitest.config.ts"]
+}

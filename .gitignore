@@ -1,0 +1,13 @@
+node_modules
+dist
+.astro
+coverage
+.env
+.env.local
+.DS_Store
+.wrangler
+.vercel
+.cache
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
